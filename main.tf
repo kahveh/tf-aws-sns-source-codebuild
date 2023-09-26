@@ -1,7 +1,3 @@
-data "aws_caller_identity" "current" {}
-data "aws_partition" "current" {}
-data "aws_region" "current" {}
-
 locals {
   notification_name     = try(var.notification_name, "project")
   sns_topic_arn         = var.sns_topic_arn
@@ -38,7 +34,6 @@ resource "aws_codestarnotifications_notification_rule" "codebuild_state" {
     "codebuild-project-build-state-in-progress",
     "codebuild-project-build-state-stopped"
   ]
-
 
   name     = "${local.notification_name}-codebuild-state-notification"
   resource = local.codebuild_project_arn
